@@ -27,7 +27,7 @@ public class Track {
             this.finalDisplacement = true;
         }
         else{
-            
+
             this.finalDisplacement = false;
         }
     }

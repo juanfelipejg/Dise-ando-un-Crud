@@ -1,5 +1,6 @@
 package com.example.juegoCarros.domain.car;
 
+import com.example.juegoCarros.domain.game.Player;
 import com.example.juegoCarros.domain.helpers.Color;
 
 public class Car {
