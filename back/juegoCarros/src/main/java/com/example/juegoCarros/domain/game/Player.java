@@ -11,6 +11,12 @@ public class Player {
 
     private int points;
 
+    public Player(Name name, Color color) {
+        this.name = name;
+        this.color = color;
+        this.points = 0;
+    }
+
     public Name getName() {
         return name;
     }
