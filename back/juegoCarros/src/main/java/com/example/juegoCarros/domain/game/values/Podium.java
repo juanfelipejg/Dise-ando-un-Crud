@@ -1,5 +1,7 @@
 package com.example.juegoCarros.domain.game.values;
 
+import com.example.juegoCarros.domain.game.Player;
+
 public class Podium {
 
     private Player firstPlace;
@@ -30,5 +32,9 @@ public class Podium {
 
     public void setThirdPlace(Player thirdPlace) {
         this.thirdPlace = thirdPlace;
+    }
+
+    public boolean isFill(){
+        return true;
     }
 }
