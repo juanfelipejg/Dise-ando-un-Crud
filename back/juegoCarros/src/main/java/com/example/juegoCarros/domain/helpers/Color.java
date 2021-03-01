@@ -1,6 +1,6 @@
 package com.example.juegoCarros.domain.helpers;
 
-public enum Colors {
+public enum Color {
     BLUE("Blue"),
     RED("Red"),
     GREEN("Green"),
@@ -14,7 +14,7 @@ public enum Colors {
 
     private String color;
 
-    Colors(String color){
+    Color(String color){
         this.color = color;
     }
 
