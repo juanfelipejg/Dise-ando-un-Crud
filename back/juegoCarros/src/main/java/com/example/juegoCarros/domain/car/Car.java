@@ -1,12 +1,12 @@
 package com.example.juegoCarros.domain.car;
 
 import com.example.juegoCarros.domain.helpers.Color;
-
+import com.example.juegoCarros.domain.game.Player;
 public class Car {
 
-    Player driver;
-    int distance;
-    Color color;
+    private Player driver;
+    private int distance;
+    private Color color;
 
     public Car(Player driver, int distance, Color color){
         this.driver = driver;
