@@ -3,8 +3,10 @@ package com.example.juegoCarros.assembler;
 import com.example.juegoCarros.entities.Game;
 
 import com.example.juegoCarros.entities.Podium;
+import com.example.juegoCarros.entities.Result;
 import com.example.juegoCarros.models.GameModel;
 import com.example.juegoCarros.models.PodiumModel;
+import com.example.juegoCarros.models.ResultModel;
 import com.example.juegoCarros.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.juegoCarros.entities.Player;
@@ -72,6 +74,30 @@ public class Assembler {
         player.setName(playerModel.getName());
         
         return player;
+
+    }
+
+    public static ResultModel makeResultModel (Result result){
+        ResultModel resultModel = new ResultModel();
+
+        resultModel.setId(result.getId());
+        resultModel.setPlayerId(result.getPlayer().getId());
+        resultModel.setFirstPlaces(result.getFirstPlaces());
+        resultModel.setSecondPlaces(result.getSecondPlaces());
+        resultModel.setThirdPlaces(result.getThirdPlaces());
+
+        return  resultModel;
+    }
+
+    public static Result makeResult (ResultModel resultModel){
+        Result result = new Result();
+
+        result.setId(resultModel.getId());
+        result.setFirstPlaces(resultModel.getFirstPlaces());
+        result.setSecondPlaces(resultModel.getSecondPlaces());
+        result.setThirdPlaces(resultModel.getThirdPlaces());
+
+        return result;
 
     }
 }
