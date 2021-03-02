@@ -44,7 +44,7 @@ public class Assembler {
         return podium;
     }
 
-    public static PodiumModel makePodiumModel(Podium podium){
+    public static PodiumModel makePodiumModel(Podium podium) {
         PodiumModel podiumModel = new PodiumModel();
 
         podiumModel.setId(podium.getId());
@@ -53,7 +53,7 @@ public class Assembler {
         podiumModel.setThirdPlayerId(podium.getThirdPlace().getId());
 
         return podiumModel;
-
+    }
 
     public static PlayerModel makePlayerModel(Player player){
         PlayerModel playerModel = new PlayerModel();
