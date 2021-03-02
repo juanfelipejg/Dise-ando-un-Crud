@@ -5,7 +5,7 @@ import com.example.juegoCarros.entities.Game;
 import com.example.juegoCarros.entities.Player;
 import com.example.juegoCarros.models.GameModel;
 import com.example.juegoCarros.repositories.GameRepository;
-import com.example.juegoCarros.repositories.PlayersRepository;
+import com.example.juegoCarros.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ public class GameService {
     private GameRepository gameRepository;
 
     @Autowired
-    private PlayersRepository playersRepository;
+    private PlayerRepository playerRepository;
 
     public Player get (Integer id){
-        return playersRepository.findById(id).orElseThrow();
+        return playerRepository.findById(id).orElseThrow();
     }
 
     public GameModel save (GameModel gameModel){
