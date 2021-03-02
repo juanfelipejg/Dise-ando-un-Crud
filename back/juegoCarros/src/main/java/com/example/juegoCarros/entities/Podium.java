@@ -1,10 +1,16 @@
 package com.example.juegoCarros.entities;
 
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class Podium {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @OneToOne
+    private Game game;
 
     @OneToOne
     private Player firstPlace;
@@ -15,12 +21,20 @@ public class Podium {
     @OneToOne
     private Player thirdPlace;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Player getFirstPlace() {

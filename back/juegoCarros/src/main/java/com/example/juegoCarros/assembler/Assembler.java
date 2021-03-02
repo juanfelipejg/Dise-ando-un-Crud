@@ -1,9 +1,16 @@
 package com.example.juegoCarros.assembler;
 
 import com.example.juegoCarros.entities.Game;
+import com.example.juegoCarros.entities.Podium;
 import com.example.juegoCarros.models.GameModel;
+import com.example.juegoCarros.models.PodiumModel;
+import com.example.juegoCarros.repositories.PlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class Assembler {
+
+    @Autowired
+    PlayerRepository playerRepository;
 
     public static Game makeGame (GameModel gameModel){
         Game game = new Game();
@@ -22,5 +29,25 @@ public class Assembler {
         gameModel.setDistance(game.getDistance());
 
         return gameModel;
+    }
+
+    public static Podium makePodium(PodiumModel podiumModel){
+
+        Podium podium = new Podium();
+        podium.setId(podiumModel.getId());
+
+        return podium;
+    }
+
+    public static PodiumModel makePodiumModel(Podium podium){
+        PodiumModel podiumModel = new PodiumModel();
+
+        podiumModel.setId(podium.getId());
+        podiumModel.setFirstPlayerId(podium.getFirstPlace().getId());
+        podiumModel.setSecondPlayerId(podium.getSecondPlace().getId());
+        podiumModel.setThirdPlayerId(podium.getThirdPlace().getId());
+
+        return podiumModel;
+
     }
 }
