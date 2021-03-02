@@ -24,7 +24,6 @@ public class GameService {
 
     public GameModel save (GameModel gameModel){
         Game game = Assembler.makeGame(gameModel);
-        Game newGame = gameRepository.save(game);
-        return Assembler.makeGameModel(newGame);
+        return Assembler.makeGameModel(gameRepository.save(game));
     }
 }

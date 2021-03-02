@@ -12,6 +12,7 @@ public class Podium {
     @OneToOne
     private Game game;
 
+
     @OneToOne
     private Player firstPlace;
 
