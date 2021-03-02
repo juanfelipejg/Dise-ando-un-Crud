@@ -1,10 +1,8 @@
 package com.example.juegoCarros.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class Result {
 
     @Id
@@ -12,7 +10,7 @@ public class Result {
     private Integer id;
 
     @OneToOne
-    private Players player;
+    private Player player;
 
     private Integer firstPlaces;
 
@@ -28,11 +26,11 @@ public class Result {
         this.id = id;
     }
 
-    public Players getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
-    public void setPlayer(Players player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
