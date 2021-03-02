@@ -1,6 +1,8 @@
 package com.example.juegoCarros.entities;
 
 
+
+import org.springframework.lang.Nullable;
 import javax.persistence.*;
 
 @Entity
@@ -12,14 +14,19 @@ public class Game {
 
     private Integer distance;
 
-    @OneToMany
-    private Players firstPlace;
+    private Integer numberOfPlayers;
 
-    @OneToMany
-    private Players secondPlace;
+    @Nullable
+    @OneToOne
+    private Player firstPlace;
 
-    @OneToMany
-    private Players thirdPlace;
+    @Nullable
+    @OneToOne
+    private Player secondPlace;
+
+    @Nullable
+    @OneToOne
+    private Player thirdPlace;
 
     public Integer getId() {
         return id;
@@ -37,27 +44,35 @@ public class Game {
         this.distance = distance;
     }
 
-    public Players getFirstPlace() {
+    public Integer getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(Integer numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public Player getFirstPlace() {
         return firstPlace;
     }
 
-    public void setFirstPlace(Players firstPlace) {
+    public void setFirstPlace(Player firstPlace) {
         this.firstPlace = firstPlace;
     }
 
-    public Players getSecondPlace() {
+    public Player getSecondPlace() {
         return secondPlace;
     }
 
-    public void setSecondPlace(Players secondPlace) {
+    public void setSecondPlace(Player secondPlace) {
         this.secondPlace = secondPlace;
     }
 
-    public Players getThirdPlace() {
+    public Player getThirdPlace() {
         return thirdPlace;
     }
 
-    public void setThirdPlace(Players thirdPlace) {
+    public void setThirdPlace(Player thirdPlace) {
         this.thirdPlace = thirdPlace;
     }
 }

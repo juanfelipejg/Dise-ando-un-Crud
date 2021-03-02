@@ -1,17 +1,16 @@
 package com.example.juegoCarros.entities;
 
-import javax.management.loading.PrivateClassLoader;
 import javax.persistence.*;
-import java.util.Set;
 
-public class PartialResults {
+@Entity
+public class PartialResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
-    private Players player;
+    private Player player;
 
     @OneToOne
     private Game game;
@@ -26,11 +25,11 @@ public class PartialResults {
         this.id = id;
     }
 
-    public Players getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
-    public void setPlayer(Players player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
