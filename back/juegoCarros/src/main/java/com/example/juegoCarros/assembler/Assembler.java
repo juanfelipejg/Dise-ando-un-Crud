@@ -20,7 +20,7 @@ public class Assembler {
         gameModel.setId(game.getId());
         gameModel.setNumberOfPlayers(game.getNumberOfPlayers());
         gameModel.setDistance(game.getDistance());
-        
+
         return gameModel;
     }
 }
