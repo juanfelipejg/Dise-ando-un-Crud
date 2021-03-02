@@ -16,13 +16,11 @@ public class Assembler {
 
     public static GameModel makeGameModel (Game game){
         GameModel gameModel = new GameModel();
+
         gameModel.setId(game.getId());
         gameModel.setNumberOfPlayers(game.getNumberOfPlayers());
         gameModel.setDistance(game.getDistance());
-        gameModel.setFirstPlaceId(game.getFirstPlace().getId());
-        gameModel.setSecondPlaceId(game.getSecondPlace().getId());
-        gameModel.setThirdPlaceId(game.getThirdPlace().getId());
-
+        
         return gameModel;
     }
 }

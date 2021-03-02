@@ -16,18 +16,6 @@ public class Game {
 
     private Integer numberOfPlayers;
 
-    @Nullable
-    @OneToOne
-    private Player firstPlace;
-
-    @Nullable
-    @OneToOne
-    private Player secondPlace;
-
-    @Nullable
-    @OneToOne
-    private Player thirdPlace;
-
     public Integer getId() {
         return id;
     }
@@ -52,27 +40,4 @@ public class Game {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public Player getFirstPlace() {
-        return firstPlace;
-    }
-
-    public void setFirstPlace(Player firstPlace) {
-        this.firstPlace = firstPlace;
-    }
-
-    public Player getSecondPlace() {
-        return secondPlace;
-    }
-
-    public void setSecondPlace(Player secondPlace) {
-        this.secondPlace = secondPlace;
-    }
-
-    public Player getThirdPlace() {
-        return thirdPlace;
-    }
-
-    public void setThirdPlace(Player thirdPlace) {
-        this.thirdPlace = thirdPlace;
-    }
 }

@@ -24,14 +24,7 @@ public class GameService {
 
     public GameModel save (GameModel gameModel){
         Game game = Assembler.makeGame(gameModel);
-        game.setFirstPlace(get(gameModel.getFirstPlaceId()));
-        game.setSecondPlace(get(gameModel.getSecondPlaceId()));
-        game.setThirdPlace(get(gameModel.getThirdPlaceId()));
-
         Game newGame = gameRepository.save(game);
-
         return Assembler.makeGameModel(newGame);
-
-
     }
 }
