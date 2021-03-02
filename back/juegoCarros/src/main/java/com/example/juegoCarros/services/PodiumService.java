@@ -9,6 +9,7 @@ import com.example.juegoCarros.repositories.PlayerRepository;
 import com.example.juegoCarros.repositories.PodiumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class PodiumService {
@@ -43,8 +44,9 @@ public class PodiumService {
 
     }
 
-    public Podium getByGame(Game game){
-        return podiumRepository.findByGame(game);
+    public PodiumModel getByGame(Integer id){
+        Game game = gameRepository.findById(id).orElseThrow();
+        return Assembler.makePodiumModel(podiumRepository.findByGame(game));
     }
 
 }

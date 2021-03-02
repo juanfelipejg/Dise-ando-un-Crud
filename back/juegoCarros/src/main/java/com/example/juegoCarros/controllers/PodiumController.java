@@ -18,8 +18,13 @@ public class PodiumController {
     }
 
     @PostMapping("api/podium")
-    public PodiumModel save(PodiumModel podiumModel){
+    public PodiumModel save(@RequestBody PodiumModel podiumModel){
         return podiumService.save(podiumModel);
+    }
+
+    @GetMapping("api/podium/{id}")
+    public PodiumModel getByGame(@PathVariable("id") Integer id){
+        return podiumService.getByGame(id);
     }
 
 
