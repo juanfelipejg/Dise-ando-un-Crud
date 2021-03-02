@@ -1,4 +1,9 @@
 package com.example.juegoCarros.services;
 
-public class PlayersRepository {
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class PlayersService {
+
 }

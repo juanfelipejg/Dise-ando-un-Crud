@@ -1,2 +1,4 @@
-package com.example.juegoCarros.models;public class PlayersModel {
+package com.example.juegoCarros.models;
+
+public class PlayersModel {
 }
