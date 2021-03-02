@@ -1,9 +1,12 @@
 package com.example.juegoCarros.entities;
 
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
+@Entity
 public class Podium {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne

@@ -1,7 +1,9 @@
 package com.example.juegoCarros.assembler;
 
 import com.example.juegoCarros.entities.Game;
+import com.example.juegoCarros.entities.Player;
 import com.example.juegoCarros.models.GameModel;
+import com.example.juegoCarros.models.PlayerModel;
 
 public class Assembler {
 
@@ -22,5 +24,23 @@ public class Assembler {
         gameModel.setDistance(game.getDistance());
 
         return gameModel;
+    }
+
+    public static PlayerModel makePlayerModel (Player player){
+        PlayerModel playerModel = new PlayerModel();
+
+        playerModel.setId(player.getId());
+        playerModel.setName(player.getName());
+
+        return playerModel;
+    }
+
+    public static Player makePlayer (PlayerModel playerModel){
+        Player player = new Player();
+        
+        player.setId(playerModel.getId());
+        player.setName(playerModel.getName());
+        
+        return player;
     }
 }
