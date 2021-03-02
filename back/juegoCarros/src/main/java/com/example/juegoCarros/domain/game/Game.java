@@ -1,6 +1,5 @@
 package com.example.juegoCarros.domain.game;
 
-import com.example.juegoCarros.domain.game.values.Name;
 import com.example.juegoCarros.domain.game.values.Pist;
 import com.example.juegoCarros.domain.game.values.Podium;
 import com.example.juegoCarros.domain.helpers.Color;
@@ -15,7 +14,7 @@ public class Game {
     private boolean playing;
     private Podium podium;
 
-    public void createPlayer(Integer playerID, Name name, Color color ){
+    public void createPlayer(Integer playerID, String name, Color color ){
         Player player = new Player(name, color);
         players.put(playerID, player);
     }

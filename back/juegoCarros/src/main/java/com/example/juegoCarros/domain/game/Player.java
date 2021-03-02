@@ -1,27 +1,26 @@
 package com.example.juegoCarros.domain.game;
 
-import com.example.juegoCarros.domain.game.values.Name;
 import com.example.juegoCarros.domain.helpers.Color;
 
 public class Player {
 
-    private Name name;
+    private String name;
 
     private Color color;
 
     private int points;
 
-    public Player(Name name, Color color) {
+    public Player(String name, Color color) {
         this.name = name;
         this.color = color;
         this.points = 0;
     }
 
-    public Name getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(String name) {
         this.name = name;
     }
 
