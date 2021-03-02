@@ -1,8 +1,4 @@
 package com.example.juegoCarros.entities;
-
-
-
-import org.springframework.lang.Nullable;
 import javax.persistence.*;
 
 @Entity
