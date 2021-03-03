@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom';
+import CreatePlayerView from './CreatePlayerView'
 
 const HOST_API = "http://localhost:8080/api"
 
@@ -26,6 +28,8 @@ const CreateGameView = () => {
         })
             .then(response => response.json())
             .then(response => console.log(response))
+
+        ReactDOM.render(<CreatePlayerView />, document.getElementById("app-container"))
 
     }
 

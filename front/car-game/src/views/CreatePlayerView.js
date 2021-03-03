@@ -2,6 +2,10 @@ import React from 'react'
 
 const CreatePlayerView = () =>{
 
+    const startGame = () => {
+        
+    };
+
     return(
         <div className="container p-3 form-container">
             <form>
@@ -18,7 +22,7 @@ const CreatePlayerView = () =>{
                     <input type="text" className="form-control" id="distance"></input>
                 </div>
                 <div className = "button-container">
-                    <button className="btn btn-primary">Enviar</button>
+                    <button className="btn btn-primary" onClick = {startGame}>Empezar Juego</button>
                 </div>
             </form>
         </div>
