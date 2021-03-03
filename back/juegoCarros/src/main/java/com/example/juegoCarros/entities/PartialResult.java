@@ -12,7 +12,7 @@ public class PartialResult {
     @OneToOne
     private Player player;
 
-    @OneToOne
+    @ManyToOne
     private Game game;
 
     private int partialDistance;

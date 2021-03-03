@@ -2,8 +2,10 @@ package com.example.juegoCarros.assembler;
 
 import com.example.juegoCarros.entities.Game;
 
+import com.example.juegoCarros.entities.PartialResult;
 import com.example.juegoCarros.entities.Podium;
 import com.example.juegoCarros.models.GameModel;
+import com.example.juegoCarros.models.PartialResultModel;
 import com.example.juegoCarros.models.PodiumModel;
 import com.example.juegoCarros.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +74,28 @@ public class Assembler {
         player.setName(playerModel.getName());
         
         return player;
+
+    }
+
+    public static PartialResultModel makePartialResultModel(PartialResult partialResult){
+        PartialResultModel partialResultModel= new PartialResultModel();
+
+        partialResultModel.setId(partialResult.getId());
+        partialResultModel.setGameId(partialResult.getGame().getId());
+        partialResultModel.setPartialDistance(partialResult.getPartialDistance());
+        partialResultModel.setPlayerId(partialResult.getPlayer().getId());
+
+        return partialResultModel;
+    }
+
+    public static PartialResult makePartialResult(PartialResultModel partialResultModel){
+
+        PartialResult partialResult = new PartialResult();
+
+        partialResult.setId(partialResultModel.getId());
+        partialResult.setPartialDistance(partialResultModel.getPartialDistance());
+
+        return partialResult;
 
     }
 }
