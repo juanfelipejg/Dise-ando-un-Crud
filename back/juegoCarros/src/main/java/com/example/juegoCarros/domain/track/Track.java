@@ -10,7 +10,7 @@ public class Track {
     private boolean finalDisplacement;
 
 
-    public Track(Car car, Position position, int meters){
+    public Track(Car car, Position position){
         this.car = car;
         this.position = position;
         this.meters = position.getActual();
