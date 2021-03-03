@@ -27,5 +27,5 @@ public class GameService {
         return Assembler.makeGameModel(gameRepository.save(game));
     }
 
-    
+
 }
