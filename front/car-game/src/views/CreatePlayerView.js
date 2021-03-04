@@ -10,8 +10,7 @@ const CreatePlayerView = () =>{
         console.log(players);
     };
     
-    const submitForm = (event) =>{
-        event.preventDefault();
+    const submitForm = (event) =>{       
 
         setPlayers({...players, [event.target.name]: event.target.value})
     }

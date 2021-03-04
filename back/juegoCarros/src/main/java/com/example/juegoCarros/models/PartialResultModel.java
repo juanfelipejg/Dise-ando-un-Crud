@@ -6,6 +6,7 @@ public class PartialResultModel {
     private Integer playerId;
     private Integer gameId;
     private Integer partialDistance;
+    private String color;
 
     public Integer getId() {
         return id;
@@ -37,5 +38,13 @@ public class PartialResultModel {
 
     public void setPartialDistance(Integer partialDistance) {
         this.partialDistance = partialDistance;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

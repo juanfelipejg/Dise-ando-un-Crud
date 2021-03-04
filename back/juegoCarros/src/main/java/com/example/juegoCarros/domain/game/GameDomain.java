@@ -2,7 +2,6 @@ package com.example.juegoCarros.domain.game;
 
 import com.example.juegoCarros.domain.game.values.Pist;
 import com.example.juegoCarros.domain.game.values.Podium;
-import com.example.juegoCarros.domain.helpers.Color;
 import com.example.juegoCarros.entities.Player;
 
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class GameDomain {
      podium.setSecondPlace(player);
     }
 
-    public void thirdSecondPlace(Player player){
+    public void setThirdPlace(Player player){
          podium.setThirdPlace(player);
     }
 
@@ -53,6 +52,10 @@ public class GameDomain {
 
     public boolean isPlaying() {
         return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     public Podium podium() {

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Random;
 
 @Entity
 public class Player {
@@ -28,5 +29,13 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int throwDice(){
+
+        Random rand = new Random();
+        int upperbound = 6;
+
+        return (rand.nextInt(upperbound) + 1);
     }
 }

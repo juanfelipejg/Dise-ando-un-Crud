@@ -1,15 +1,15 @@
 package com.example.juegoCarros.domain.car;
 
-import com.example.juegoCarros.domain.helpers.Color;
 import com.example.juegoCarros.entities.Player;
+
 
 public class Car {
 
     private Player driver;
     private int distance;
-    private Color color;
+    private String color;
 
-    public Car(Player driver, int distance, Color color){
+    public Car(Player driver, int distance, String color){
         this.driver = driver;
         this.distance = distance;
         this.color  = color;
@@ -32,6 +32,6 @@ public class Car {
     }
 
     public String color(){
-        return this.color.getColor();
+        return this.color;
     }
 }

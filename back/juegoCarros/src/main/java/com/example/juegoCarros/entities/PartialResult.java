@@ -17,6 +17,8 @@ public class PartialResult {
 
     private int partialDistance;
 
+    private String color;
+
     public Integer getId() {
         return id;
     }
@@ -47,5 +49,13 @@ public class PartialResult {
 
     public void setPartialDistance(int partialDistance) {
         this.partialDistance = partialDistance;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

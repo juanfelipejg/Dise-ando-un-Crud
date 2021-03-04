@@ -87,6 +87,7 @@ public class Assembler {
         partialResultModel.setGameId(partialResult.getGame().getId());
         partialResultModel.setPartialDistance(partialResult.getPartialDistance());
         partialResultModel.setPlayerId(partialResult.getPlayer().getId());
+        partialResultModel.setColor(partialResult.getColor());
 
         return partialResultModel;
     }
@@ -97,6 +98,7 @@ public class Assembler {
 
         partialResult.setId(partialResultModel.getId());
         partialResult.setPartialDistance(partialResultModel.getPartialDistance());
+        partialResult.setColor(partialResultModel.getColor());
 
         return partialResult;
     }

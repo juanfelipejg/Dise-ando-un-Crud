@@ -4,7 +4,7 @@ import CreatePlayerView from './CreatePlayerView'
 
 const HOST_API = "http://localhost:8080/api"
 
-const CreateGameView = () => {
+function CreateGameView ()  {
 
     const [numberOfPlayers, setNumberOfPlayers] = useState(0)
     const [distance, setDistance] = useState(0)
@@ -27,9 +27,12 @@ const CreateGameView = () => {
             }
         })
             .then(response => response.json())
-            .then(response => console.log(response))
+            .then(response => {
+                console.log(response)
+                ReactDOM.render(<CreatePlayerView />, document.getElementById("app-container"))
+            })
 
-        ReactDOM.render(<CreatePlayerView />, document.getElementById("app-container"))
+        
 
     }
 

@@ -13,7 +13,7 @@ public class Track {
     public Track(Car car, Position position){
         this.car = car;
         this.position = position;
-        this.meters = position.getActual();
+        this.meters = position.getGoal();
         this.finalDisplacement = false;
     }
 
@@ -32,7 +32,7 @@ public class Track {
         }
     }
 
-    public void moveCar(){
+    public void moveCar(int meters){
         this.position.changeActualPosition(meters);
         this.car.moveOnTrack(meters);
     }
@@ -49,7 +49,7 @@ public class Track {
         return this.position.getGoal();
     }
 
-    boolean isFinalDisplacement(){
+    public boolean isFinalDisplacement(){
         return finalDisplacement;
     }
 }
