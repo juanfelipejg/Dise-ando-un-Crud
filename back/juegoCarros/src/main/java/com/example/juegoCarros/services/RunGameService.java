@@ -5,15 +5,12 @@ import com.example.juegoCarros.domain.game.GameDomain;
 import com.example.juegoCarros.domain.game.values.Pist;
 import com.example.juegoCarros.domain.track.Track;
 import com.example.juegoCarros.domain.track.values.Position;
-import com.example.juegoCarros.entities.Game;
-import com.example.juegoCarros.entities.PartialResult;
-import com.example.juegoCarros.entities.Player;
-import com.example.juegoCarros.repositories.GameRepository;
-import com.example.juegoCarros.repositories.PartialResultRepository;
-import com.example.juegoCarros.repositories.PlayerRepository;
+import com.example.juegoCarros.entities.*;
+import com.example.juegoCarros.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,24 +21,32 @@ public class RunGameService {
     private GameRepository gameRepository;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PartialResultRepository partialResultRepository;
 
     @Autowired
-    private PartialResultRepository partialResultRepository;
+    private PodiumRepository podiumRepository;
+
+    @Autowired
+    private ResultRepository resultRepository;
 
     private Game game;
 
-    private Map<Integer, Track> tracks;
+    private Map<Integer, Track> tracks = new HashMap<>();
 
-    private GameDomain gameDomain;
+    private GameDomain gameDomain = new GameDomain();
 
-    public void setTracks() {
 
-        for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
-            tracks.put(player.getKey(), configureTrack(player.getValue()));
-        }
+    public void startGame(Integer id){
+
+        initialConfiguration(id);
+
+        runGame();
+
+        persistData();
 
     }
+
+
 
     private void initialConfiguration(Integer id) {
 
@@ -62,6 +67,44 @@ public class RunGameService {
             gameDomain.createPlayer(partialResult.getPlayer());
         }
 
+        setTracks();
+
+    }
+
+    private void runGame() {
+
+        gameDomain.startGame();
+
+        while (gameDomain.isPlaying()) {
+
+            playerTurn();
+        }
+
+    }
+
+    private void persistData(){
+
+        persistPodium();
+
+        persistGameResults();
+
+
+    }
+
+
+
+    private void setTracks() {
+
+        for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
+            tracks.put(player.getKey(), configureTrack(player.getValue()));
+        }
+
+    }
+
+    private Track configureTrack(Player player) {
+
+        return new Track(configureCar(player), configurePosition());
+
     }
 
     private Car configureCar(Player player) {
@@ -76,45 +119,113 @@ public class RunGameService {
 
     }
 
-    private Track configureTrack(Player player) {
+    private void playerTurn() {
+        for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
 
-        return new Track(configureCar(player), configurePosition());
+            Player playerInTurn = player.getValue();
+            Track trackInTurn = tracks.get(playerInTurn.getId());
+
+            if(trackInTurn.isFinalDisplacement()){
+                continue;
+            }
+
+            throwDice(playerInTurn, trackInTurn);
+
+            setPodium(playerInTurn, trackInTurn);
+
+            tracks.replace(playerInTurn.getId(), trackInTurn);
+
+            try{
+
+                Thread.sleep(1000);
+            }catch (InterruptedException ex){
+
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    private void throwDice(Player playerInTurn, Track trackInTurn) {
+        int launch = playerInTurn.throwDice();
+
+        trackInTurn.moveCar(launch * 100);
+
+        PartialResult partialResult = partialResultRepository.findByPlayer(playerInTurn);
+
+        partialResult.setPartialDistance(trackInTurn.actualPosition());
+
+        partialResultRepository.save(partialResult);
+
+        trackInTurn.reachGoal();
+
+        tracks.replace(playerInTurn.getId(), trackInTurn);
+    }
+
+    private void setPodium(Player playerInTurn, Track trackInTurn) {
+        if (trackInTurn.isFinalDisplacement()) {
+
+            if (isPlaceTaken(gameDomain.podium().getFirstPlace())) {
+
+                gameDomain.setFirstPlace(playerInTurn);
+
+            } else if (isPlaceTaken(gameDomain.podium().getSecondPlace())) {
+
+                gameDomain.setSecondPlace(playerInTurn);
+
+            } else {
+
+                gameDomain.setThirdPlace(playerInTurn);
+                gameDomain.setPlaying(false);
+            }
+
+        }
+    }
+
+    private boolean isPlaceTaken(Player firstPlace) {
+        return firstPlace == null;
+    }
+
+    private void persistGameResults() {
+        persistFirstPlayerResults();
+
+        persistSecondPlayerResults();
+
+        persistThirdPlayerResults();
+    }
+
+    private void persistThirdPlayerResults() {
+        Player thirdPlace = gameDomain.podium().getThirdPlace();
+        Result resultThird = resultRepository.findByPlayer(thirdPlace);
+        resultThird.setThirdPlaces(resultThird.getThirdPlaces() + 1);
+        resultRepository.save(resultThird);
+    }
+
+    private void persistSecondPlayerResults() {
+        Player secondPlace = gameDomain.podium().getSecondPlace();
+        Result resultSecond = resultRepository.findByPlayer(secondPlace);
+        resultSecond.setSecondPlaces(resultSecond.getSecondPlaces() + 1);
+        resultRepository.save(resultSecond);
+    }
+
+    private void persistFirstPlayerResults() {
+
+        Player firstPlace = gameDomain.podium().getFirstPlace();
+
+        Result resultFirst = resultRepository.findByPlayer(firstPlace);
+        resultFirst.setFirstPlaces(resultFirst.getFirstPlaces() + 1);
+
+        resultRepository.save(resultFirst);
 
     }
 
-    private void runGame() {
+    private void persistPodium() {
+        Podium podium = new Podium();
 
-        gameDomain.setPlaying(true);
+        podium.setGame(game);
+        podium.setFirstPlace(gameDomain.podium().getFirstPlace());
+        podium.setSecondPlace(gameDomain.podium().getSecondPlace());
+        podium.setThirdPlace(gameDomain.podium().getThirdPlace());
 
-        while (gameDomain.isPlaying()) {
-
-            for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
-                int launch = player.getValue().throwDice();
-
-                tracks.get(player.getKey()).moveCar(launch * 100);
-                PartialResult partialResult = partialResultRepository.findByPlayer(player.getValue());
-                partialResult.setPartialDistance(tracks.get(player.getValue()).actualPosition());
-                partialResultRepository.save(partialResult);
-
-                tracks.get(player.getKey()).reachGoal();
-                if (tracks.get(player.getKey()).isFinalDisplacement()) {
-                    if (gameDomain.podium().getFirstPlace() == null) {
-                        gameDomain.setFirstPlace(player.getValue());
-                    } else if (gameDomain.podium().getSecondPlace() == null) {
-                        gameDomain.setSecondPlace(player.getValue());
-                    } else {
-                        gameDomain.setThirdPlace(player.getValue());
-                        gameDomain.setPlaying(false);
-                    }
-
-                }
-
-
-            }
-
-
-        }
-
-
+        podiumRepository.save(podium);
     }
 }
