@@ -1,6 +1,5 @@
 package com.example.juegoCarros.controllers;
 
-import com.example.juegoCarros.models.PlayerModel;
 import com.example.juegoCarros.models.ResultModel;
 import com.example.juegoCarros.services.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;

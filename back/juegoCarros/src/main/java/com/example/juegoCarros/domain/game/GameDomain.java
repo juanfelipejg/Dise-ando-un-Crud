@@ -3,32 +3,40 @@ package com.example.juegoCarros.domain.game;
 import com.example.juegoCarros.domain.game.values.Pist;
 import com.example.juegoCarros.domain.game.values.Podium;
 import com.example.juegoCarros.domain.helpers.Color;
+import com.example.juegoCarros.entities.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Game {
+public class GameDomain {
 
     private Map<Integer, Player> players = new HashMap<Integer, Player>();
     private Pist pist;
     private boolean playing;
     private Podium podium;
 
-    public void createPlayer(Integer playerID, String name, Color color ){
-        Player player = new Player(name, color);
-        players.put(playerID, player);
+    public void createPlayer(Player player){
+        players.put(player.getId(), player);
     }
 
-    public void setFirstPlace(Integer playerID){
-        podium.setFirstPlace(players.get(playerID));
+    public Pist getPist() {
+        return pist;
     }
 
-    public void setSecondPlace(Integer playerID){
-     podium.setSecondPlace(players.get(playerID));
+    public void setPist(Pist pist) {
+        this.pist = pist;
     }
 
-    public void thirdSecondPlace(Integer playerID){
-         podium.setThirdPlace(players.get(playerID));
+    public void setFirstPlace(Player player){
+        podium.setFirstPlace(player);
+    }
+
+    public void setSecondPlace(Player player){
+     podium.setSecondPlace(player);
+    }
+
+    public void thirdSecondPlace(Player player){
+         podium.setThirdPlace(player);
     }
 
     public void startGame(){

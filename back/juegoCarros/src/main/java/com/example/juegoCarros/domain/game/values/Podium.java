@@ -1,6 +1,6 @@
 package com.example.juegoCarros.domain.game.values;
 
-import com.example.juegoCarros.domain.game.Player;
+import com.example.juegoCarros.entities.Player;
 
 public class Podium {
 

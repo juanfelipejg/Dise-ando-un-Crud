@@ -6,6 +6,11 @@ public class Pist {
 
     private int numTracks;
 
+    public Pist(int kilometers, int numTracks) {
+        this.kilometers = kilometers;
+        this.numTracks = numTracks;
+    }
+
     public int getKilometers() {
         return kilometers;
     }
