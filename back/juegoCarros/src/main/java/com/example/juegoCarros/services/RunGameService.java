@@ -3,6 +3,7 @@ package com.example.juegoCarros.services;
 import com.example.juegoCarros.domain.car.Car;
 import com.example.juegoCarros.domain.game.GameDomain;
 import com.example.juegoCarros.domain.game.values.Pist;
+import com.example.juegoCarros.domain.game.values.PodiumDomain;
 import com.example.juegoCarros.domain.track.Track;
 import com.example.juegoCarros.domain.track.values.Position;
 import com.example.juegoCarros.entities.*;
@@ -46,8 +47,6 @@ public class RunGameService {
 
     }
 
-
-
     private void initialConfiguration(Integer id) {
 
         game = gameRepository.findById(id).orElseThrow();
@@ -58,7 +57,11 @@ public class RunGameService {
 
         Pist pist = new Pist(kilometers, numTracks);
 
+        PodiumDomain podium = new PodiumDomain();
+
         gameDomain.setPist(pist);
+
+        gameDomain.setPodium(podium);
 
         List<PartialResult> partialResultList = partialResultRepository.findAllByGame(game);
 
@@ -66,45 +69,20 @@ public class RunGameService {
 
             gameDomain.createPlayer(partialResult.getPlayer());
         }
-
         setTracks();
 
     }
-
-    private void runGame() {
-
-        gameDomain.startGame();
-
-        while (gameDomain.isPlaying()) {
-
-            playerTurn();
-        }
-
-    }
-
-    private void persistData(){
-
-        persistPodium();
-
-        persistGameResults();
-
-
-    }
-
-
 
     private void setTracks() {
 
         for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
             tracks.put(player.getKey(), configureTrack(player.getValue()));
         }
-
     }
 
     private Track configureTrack(Player player) {
 
         return new Track(configureCar(player), configurePosition());
-
     }
 
     private Car configureCar(Player player) {
@@ -117,6 +95,14 @@ public class RunGameService {
 
         return new Position(0, gameDomain.getPist().getKilometers() * 1000);
 
+    }
+
+   private void runGame() {
+        gameDomain.startGame();
+
+        while (gameDomain.isPlaying()) {
+            playerTurn();
+        }
     }
 
     private void playerTurn() {
@@ -138,6 +124,7 @@ public class RunGameService {
             try{
 
                 Thread.sleep(1000);
+
             }catch (InterruptedException ex){
 
                 Thread.currentThread().interrupt();
@@ -181,41 +168,18 @@ public class RunGameService {
         }
     }
 
-    private boolean isPlaceTaken(Player firstPlace) {
-        return firstPlace == null;
+    private boolean isPlaceTaken(Player player) {
+        if(player == null) {
+
+            return true;
+        }
+            return false;
     }
 
-    private void persistGameResults() {
-        persistFirstPlayerResults();
+    private void persistData(){
 
-        persistSecondPlayerResults();
-
-        persistThirdPlayerResults();
-    }
-
-    private void persistThirdPlayerResults() {
-        Player thirdPlace = gameDomain.podium().getThirdPlace();
-        Result resultThird = resultRepository.findByPlayer(thirdPlace);
-        resultThird.setThirdPlaces(resultThird.getThirdPlaces() + 1);
-        resultRepository.save(resultThird);
-    }
-
-    private void persistSecondPlayerResults() {
-        Player secondPlace = gameDomain.podium().getSecondPlace();
-        Result resultSecond = resultRepository.findByPlayer(secondPlace);
-        resultSecond.setSecondPlaces(resultSecond.getSecondPlaces() + 1);
-        resultRepository.save(resultSecond);
-    }
-
-    private void persistFirstPlayerResults() {
-
-        Player firstPlace = gameDomain.podium().getFirstPlace();
-
-        Result resultFirst = resultRepository.findByPlayer(firstPlace);
-        resultFirst.setFirstPlaces(resultFirst.getFirstPlaces() + 1);
-
-        resultRepository.save(resultFirst);
-
+        persistPodium();
+        persistGameResults();
     }
 
     private void persistPodium() {
@@ -228,4 +192,73 @@ public class RunGameService {
 
         podiumRepository.save(podium);
     }
+
+
+    private void persistGameResults() {
+
+        persistFirstPlayerResults();
+
+        persistSecondPlayerResults();
+
+        persistThirdPlayerResults();
+    }
+
+    private void persistFirstPlayerResults() {
+
+        Player firstPlace = gameDomain.podium().getFirstPlace();
+
+        Result resultFirst = new Result();
+
+        if(resultRepository.findByPlayer(firstPlace) == null){
+            resultFirst.setPlayer(firstPlace);
+            resultFirst.setFirstPlaces(1);
+        }
+        else{
+            resultFirst = resultRepository.findByPlayer(firstPlace);
+            resultFirst.setFirstPlaces(resultFirst.getFirstPlaces() + 1);
+        }
+
+        resultRepository.save(resultFirst);
+
+    }
+
+    private void persistThirdPlayerResults() {
+
+        Player secondPlace = gameDomain.podium().getSecondPlace();
+
+        Result resultSecond = new Result();
+
+        if (resultRepository.findByPlayer(secondPlace) == null){
+            resultSecond.setPlayer(secondPlace);
+            resultSecond.setSecondPlaces(1);
+        }
+        else{
+            resultSecond = resultRepository.findByPlayer(secondPlace);
+            resultSecond.setSecondPlaces(resultSecond.getThirdPlaces() + 1);
+        }
+
+        resultRepository.save(resultSecond);
+    }
+
+    private void persistSecondPlayerResults() {
+
+        Player thirdPlace = gameDomain.podium().getThirdPlace();
+
+        Result resultThird = new Result();
+
+        if (resultRepository.findByPlayer(thirdPlace) == null){
+            resultThird.setPlayer(thirdPlace);
+            resultThird.setThirdPlaces(1);
+        }
+        else{
+            resultThird = resultRepository.findByPlayer(thirdPlace);
+            resultThird.setThirdPlaces(resultThird.getThirdPlaces() + 1);
+        }
+
+        resultRepository.save(resultThird);
+
+    }
+
+
+
 }

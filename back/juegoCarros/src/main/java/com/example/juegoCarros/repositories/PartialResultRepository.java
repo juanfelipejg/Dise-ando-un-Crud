@@ -14,4 +14,5 @@ public interface PartialResultRepository extends CrudRepository<PartialResult, I
     public List<PartialResult> findAllByGame(Game game);
 
     public PartialResult findByPlayer(Player player);
+
 }

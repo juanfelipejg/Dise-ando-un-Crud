@@ -2,7 +2,7 @@ package com.example.juegoCarros.domain.game.values;
 
 import com.example.juegoCarros.entities.Player;
 
-public class Podium {
+public class PodiumDomain {
 
     private Player firstPlace;
 

@@ -14,7 +14,7 @@ public class Position {
     }
 
     public void changeActualPosition(int meters) {
-        this.actual += actual;
+        this.actual += meters;
     }
 
     public int getGoal() {
