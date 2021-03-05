@@ -28,11 +28,8 @@ function CreateGameView ()  {
         })
             .then(response => response.json())
             .then(response => {
-                console.log(response)
-                ReactDOM.render(<CreatePlayerView />, document.getElementById("app-container"))
-            })
-
-        
+                ReactDOM.render(<CreatePlayerView numberOfPlayers = {response.numberOfPlayers} />, document.getElementById("app-container"))
+            })        
 
     }
 

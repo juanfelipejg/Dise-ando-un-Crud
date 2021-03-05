@@ -10,7 +10,6 @@ function App() {
                 <CreateGameView />
             </div>
         </div>
-
     )
 }
 
