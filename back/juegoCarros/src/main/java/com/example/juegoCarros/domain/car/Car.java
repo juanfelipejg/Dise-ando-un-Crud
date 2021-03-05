@@ -15,6 +15,10 @@ public class Car {
         this.color  = color;
     }
 
+    public Player getDriver() {
+        return driver;
+    }
+
     public void setDriver(Player driver){
         this.driver = driver;
     }

@@ -11,7 +11,7 @@ import com.example.juegoCarros.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class RunGameService {
 
     private Game game;
 
-    private Map<Integer, Track> tracks = new HashMap<>();
+    private List<Track> tracks = new ArrayList<>();
 
     private GameDomain gameDomain = new GameDomain();
 
@@ -76,7 +76,7 @@ public class RunGameService {
     private void setTracks() {
 
         for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
-            tracks.put(player.getKey(), configureTrack(player.getValue()));
+            tracks.add(configureTrack(player.getValue()));
         }
     }
 
@@ -98,6 +98,7 @@ public class RunGameService {
     }
 
    private void runGame() {
+
         gameDomain.startGame();
 
         while (gameDomain.isPlaying()) {
@@ -109,7 +110,7 @@ public class RunGameService {
         for (Map.Entry<Integer, Player> player : gameDomain.players().entrySet()) {
 
             Player playerInTurn = player.getValue();
-            Track trackInTurn = tracks.get(playerInTurn.getId());
+            Track trackInTurn = tracks.get(playerInTurn.getId() - 1);
 
             if(trackInTurn.isFinalDisplacement()){
                 continue;
@@ -118,8 +119,6 @@ public class RunGameService {
             throwDice(playerInTurn, trackInTurn);
 
             setPodium(playerInTurn, trackInTurn);
-
-            tracks.replace(playerInTurn.getId(), trackInTurn);
 
             try{
 
@@ -133,6 +132,7 @@ public class RunGameService {
     }
 
     private void throwDice(Player playerInTurn, Track trackInTurn) {
+
         int launch = playerInTurn.throwDice();
 
         trackInTurn.moveCar(launch * 100);
@@ -145,8 +145,8 @@ public class RunGameService {
 
         trackInTurn.reachGoal();
 
-        tracks.replace(playerInTurn.getId(), trackInTurn);
     }
+
 
     private void setPodium(Player playerInTurn, Track trackInTurn) {
         if (trackInTurn.isFinalDisplacement()) {
@@ -163,17 +163,25 @@ public class RunGameService {
 
                 gameDomain.setThirdPlace(playerInTurn);
                 gameDomain.setPlaying(false);
+                resetTracks();
+
             }
 
         }
     }
 
     private boolean isPlaceTaken(Player player) {
-        if(player == null) {
 
+        if(player == null) {
             return true;
         }
             return false;
+    }
+
+    private void resetTracks() {
+        for (Track track : tracks) {
+            track.setFinalDisplacement(false);
+        }
     }
 
     private void persistData(){
@@ -222,7 +230,7 @@ public class RunGameService {
 
     }
 
-    private void persistThirdPlayerResults() {
+    private void persistSecondPlayerResults() {
 
         Player secondPlace = gameDomain.podium().getSecondPlace();
 
@@ -234,13 +242,14 @@ public class RunGameService {
         }
         else{
             resultSecond = resultRepository.findByPlayer(secondPlace);
-            resultSecond.setSecondPlaces(resultSecond.getThirdPlaces() + 1);
+            resultSecond.setSecondPlaces(resultSecond.getSecondPlaces() + 1);
         }
 
         resultRepository.save(resultSecond);
+
     }
 
-    private void persistSecondPlayerResults() {
+    private void persistThirdPlayerResults() {
 
         Player thirdPlace = gameDomain.podium().getThirdPlace();
 
@@ -256,9 +265,7 @@ public class RunGameService {
         }
 
         resultRepository.save(resultThird);
-
     }
-
 
 
 }

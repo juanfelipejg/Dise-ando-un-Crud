@@ -37,6 +37,10 @@ public class Track {
         this.car.moveOnTrack(meters);
     }
 
+    public Car getCar() {
+        return car;
+    }
+
     public int meters(){
         return this.meters;
     }
@@ -51,5 +55,9 @@ public class Track {
 
     public boolean isFinalDisplacement(){
         return finalDisplacement;
+    }
+
+    public void setFinalDisplacement(boolean finalDisplacement) {
+        this.finalDisplacement = finalDisplacement;
     }
 }
