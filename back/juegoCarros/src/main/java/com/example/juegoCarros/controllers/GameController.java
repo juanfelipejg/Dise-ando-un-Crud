@@ -15,7 +15,6 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-
     @PostMapping(value = "api/game")
     public GameModel save (@Valid @RequestBody GameModel gameModel){
         return gameService.save(gameModel);

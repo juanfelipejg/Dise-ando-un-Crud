@@ -6,6 +6,13 @@ public class PlayerModel {
 
     private String name;
 
+    private String color;
+
+    private Integer gameId;
+
+    private int partialDistance;
+
+
     public Integer getId() {
         return id;
     }
@@ -20,5 +27,25 @@ public class PlayerModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {return color;}
+
+    public void setColor(String color) {this.color = color; }
+
+    public Integer getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
+    }
+
+    public int getPartialDistance() {
+        return partialDistance;
+    }
+
+    public void setPartialDistance(int partialDistance) {
+        this.partialDistance = partialDistance;
     }
 }

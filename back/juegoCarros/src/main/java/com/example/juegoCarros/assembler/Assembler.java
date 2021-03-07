@@ -61,15 +61,18 @@ public class Assembler {
     }
 
     public static PlayerModel makePlayerModel(Player player){
+
         PlayerModel playerModel = new PlayerModel();
 
         playerModel.setId(player.getId());
         playerModel.setName(player.getName());
+        playerModel.setPartialDistance(0);
 
         return playerModel;
     }
 
     public static Player makePlayer (PlayerModel playerModel){
+
         Player player = new Player();
         
         player.setId(playerModel.getId());
@@ -91,6 +94,18 @@ public class Assembler {
 
         return partialResultModel;
     }
+
+    public static PartialResultModel makePartialResultModel(PlayerModel playerModel){
+        PartialResultModel partialResultModel= new PartialResultModel();
+
+        partialResultModel.setId(playerModel.getId());
+        partialResultModel.setPartialDistance(playerModel.getPartialDistance());
+        partialResultModel.setColor(playerModel.getColor());
+
+        return partialResultModel;
+    }
+
+
 
     public static PartialResult makePartialResult(PartialResultModel partialResultModel) {
 

@@ -2,10 +2,15 @@ package com.example.juegoCarros.models;
 
 public class PartialResultModel {
 
+
     private Integer id;
+
     private Integer playerId;
+
     private Integer gameId;
+
     private Integer partialDistance;
+
     private String color;
 
     public Integer getId() {

@@ -10,8 +10,11 @@ import java.util.Map;
 public class GameDomain {
 
     private Map<Integer, Player> players = new HashMap<Integer, Player>();
+
     private Pist pist;
+
     private boolean playing;
+
     private PodiumDomain podiumDomain;
 
     public void createPlayer(Player player){

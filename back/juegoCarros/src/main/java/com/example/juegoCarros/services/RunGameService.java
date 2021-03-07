@@ -220,6 +220,8 @@ public class RunGameService {
         if(resultRepository.findByPlayer(firstPlace) == null){
             resultFirst.setPlayer(firstPlace);
             resultFirst.setFirstPlaces(1);
+            resultFirst.setSecondPlaces(0);
+            resultFirst.setThirdPlaces(0);
         }
         else{
             resultFirst = resultRepository.findByPlayer(firstPlace);
@@ -238,7 +240,9 @@ public class RunGameService {
 
         if (resultRepository.findByPlayer(secondPlace) == null){
             resultSecond.setPlayer(secondPlace);
+            resultSecond.setFirstPlaces(0);
             resultSecond.setSecondPlaces(1);
+            resultSecond.setThirdPlaces(0);
         }
         else{
             resultSecond = resultRepository.findByPlayer(secondPlace);
@@ -257,6 +261,8 @@ public class RunGameService {
 
         if (resultRepository.findByPlayer(thirdPlace) == null){
             resultThird.setPlayer(thirdPlace);
+            resultThird.setFirstPlaces(0);
+            resultThird.setSecondPlaces(0);
             resultThird.setThirdPlaces(1);
         }
         else{
