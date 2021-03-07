@@ -1,75 +1,63 @@
-import React, {useState} from 'react'
+import React, {useState}  from 'react'
 
 const HOST_API = "http://localhost:8080/api"
 
-function CreatePlayerView(props)  {
+function CreatePlayerView({numPlayers})  {
 
-    console.log(props.numbersOfPlayers)
-
-    const [numberOfPlayers, setPlayers] = React.useState(props.numbersOfPlayers);
-
+    const [players, setPlayers] = useState([]);
 
     const create = (event) => {
 
         event.preventDefault();
 
-        const request = {
-            players: numberOfPlayers
-        }
+        players.forEach(element => {
 
-        fetch(`${HOST_API}/player`, {
-            method: "POST",
-            body: JSON.stringify(request),
-            headers: {
-                'Content-Type': 'application/json'
+            const request = {
+                name: element.name
             }
-        })
+
+            fetch(`${HOST_API}/player`, {
+                method: "POST",
+                body: JSON.stringify(request),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(response => response.json())
-            .then(response => {
-                console.log(response)
+            .then(response => {                
                 //ReactDOM.render(<StartGameView />, document.getElementById("app-container"))
             })
 
+        })
+
     }
 
-    const submitForm = (event) =>{       
-
-        setPlayers({...numberOfPlayers, [event.target.name]: event.target.value})
-    }
-
+    function submitForm (event) {
+        setPlayers([...players, {name: event.target.value}])
+    }  
     
-
     const Field = ({id}: {id: number}) => (
         <div className="mb-3">
-        <label className="form-label">Jugador</label>
-        <input type="text" className="form-control" id = {`player${id}`} onChange={submitForm}></input>
+        <label className="form-label">Jugador</label>        
+        <input type="text" className="form-control" id={`player${id}`} onBlur={(event) => {submitForm(event)}}></input>
         </div>
-    );
+    )
 
     const fields: JSX.Element[] = [];
-    for (let i = 1; i <= numberOfPlayers; i++) {
+    for (let i = 1; i <= numPlayers; i++) {
       fields.push(<Field id={i} key={i} />);
-    }
-
-    const startGame = (event) => {
-
-        event.preventDefault();
-
-        console.log(numberOfPlayers);
-    };     
+    }   
 
     return(
         <div className="container p-3 form-container">
-            <form onSubmit = {startGame}>
-                {console.log(fields)}
+            <form>
+                {fields}
                 <div className = "button-container">
-                    <button type = "submit" className="btn btn-primary" onClick={create}>Empezar Juego</button>
+                    <button type = "submit" className="btn btn-primary" onClick={create}> Empezar Juego </button>
                 </div>
             </form>
         </div>
     )
-
 }
-
 
 export default CreatePlayerView
